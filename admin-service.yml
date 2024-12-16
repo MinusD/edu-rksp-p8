@@ -1,0 +1,23 @@
+server:
+  port: 8090
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:admin_db
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000
+  httpclient:
+    enabled: true

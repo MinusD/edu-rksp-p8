@@ -1,0 +1,33 @@
+server:
+  port: 8060
+  forward-headers-strategy: framework
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: users-service
+          uri: lb://users-service
+          predicates:
+            - Path=/users/**
+          filters:
+            - RewritePath=/users/(?<path>.*), /$\{path}
+        - id: notify-service
+          uri: lb://notify-service
+          predicates:
+            - Path=/notify/**
+          filters:
+            - RewritePath=/notify/(?<path>.*), /$\{path}
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/admin/**
+          filters:
+            - RewritePath=/admin/(?<path>.*), /$\{path}
+
